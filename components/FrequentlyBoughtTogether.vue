@@ -1,9 +1,9 @@
 <template>
-    <div class="border p-6  shadow-md bg-white">
+    <div class="border p-6  shadow-md bg-white z-0">
       <h2 class="text-lg font-bold mb-4">Frequently Bought Together</h2>
       <div class="space-y-4">
         <a v-for="(course, index) in courses" :key="index" class="flex items-start space-x-4 relative"  :href="course.link">
-          <img :src="course.image" alt="Course Image" class="w-50 h-40 object-cover rounded" />
+          <img :src="course.image" alt="Course Image" class="w-50 h-40  object-cover rounded" />
                     
           <div class="flex-grow">
             <h3 class="font-semibold text-sm">{{ course.title }}</h3>
@@ -14,7 +14,7 @@
             </div>
             <span v-if="course.badge" class="inline-block mt-1 bg-yellow-100 text-yellow-800 text-xs font-semibold px-2 py-0.5 rounded">{{ course.badge }}</span>
           </div>
-          <span v-if="index < courses.length - 1" class="text-3xl  font-bold text-gray-400 self-center absolute left-24 top-36 shadow-xl w-16 h-16 rounded-full bg-white flex justify-center align-middle items-center z-40 ">+</span>
+          <span v-if="index < courses.length - 1" class="text-3xl  font-bold text-gray-400 self-center absolute left-24 top-36 shadow-xl w-16 h-16 rounded-full bg-white flex justify-center align-middle items-center z-[5]">+</span>
 
   
           <p class="font-bold text-sm self-start">${{ course.price }}</p>

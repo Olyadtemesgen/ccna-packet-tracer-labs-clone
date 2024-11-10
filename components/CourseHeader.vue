@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-primaryBlack text-white py-2 px-6 shadow-2xl fixed top-20  w-full z-10">
+    <div class="bg-primaryBlack text-white py-2 px-6 shadow-xl fixed top-20  w-full z-10">
       <h1 class="text-base font-semibold flex-1">
         Cisco CCNA Packet Tracer Ultimate labs: CCNA 200-301 labs
       </h1>

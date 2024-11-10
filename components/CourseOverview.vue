@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-primaryBlack text-white py-8 pb-16 pl-32 z-0 font-serif relative">
+    <div ref="parentElement"   class="bg-primaryBlack text-white py-8 pb-16 pl-32  font-serif relative">
         <div class="sm:w-[60%] w-full">
             <div class="text-sm text-gray-300 mb-4 font-bold">
                 <a href="#" class="hover:underline mr-2">IT & Software</a> >
@@ -48,7 +48,79 @@
                 </span>
             </div>
         </div>
-        <CourseCard :showImage="true"/>
+        <transition name="fade">
+            <CourseCard v-if="isCourseCardVisible" :showFixed="false" :showImage="true" />
+        </transition>
+        <transition name="fade-slide">
+            <CourseCard v-if="!isCourseCardVisible" :showFixed="true" :showImage="false" />
+        </transition>
     </div>
 
 </template>
+
+<script lang="ts">
+
+import { ref, onMounted, onUnmounted } from 'vue';
+import CourseCard from './CourseCard.vue';
+
+export default {
+  components: {
+    CourseCard,
+  },
+  setup() {
+    const parentElement = ref<HTMLElement | null>(null);
+    const isCourseCardVisible = ref(true);
+    let observer: IntersectionObserver | null = null;
+  
+    onMounted(() => {
+        if (typeof IntersectionObserver !== 'undefined') {
+        observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              isCourseCardVisible.value = entry.isIntersecting;
+            });
+          },
+          { threshold: 0 }
+        );
+
+        if (parentElement.value) {
+          observer.observe(parentElement.value);
+        }
+      }
+    });
+
+    onUnmounted(() => {
+    if (observer && parentElement.value) {
+        observer.unobserve(parentElement.value);
+      }
+    });
+
+    return { parentElement, isCourseCardVisible };
+  },
+};
+</script>
+
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+  .fade-slide-enter-active,
+  .fade-slide-leave-active {
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .fade-slide-enter-from {
+    opacity: 0;
+    transform: translateY(-20px); 
+  }
+  .fade-slide-leave-to {
+    opacity: 0;
+    transform: translateY(20px); 
+  }
+  
+</style>
